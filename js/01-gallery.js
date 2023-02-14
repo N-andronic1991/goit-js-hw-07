@@ -32,16 +32,20 @@ function onImageClick(event) {
   event.preventDefault();
   
   const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="800" height="600">
-`)
+    <img src="${event.target.dataset.source}" width="800" height="600">`,
+  {
+      onShow: () => document.addEventListener("keydown", onCloseModal),
+      onClose: () => document.removeEventListener("keydown", onCloseModal),
+    });
+  
   instance.show()
 
-  document.addEventListener("keydown", (event) => {
-  if (event.code === "Escape") {
-   instance.close();
+ 
+  function onCloseModal(event) {
+    if (event.code === "Escape") {
+    instance.close();
+   }
   }
-  });
-  
 };
 
  
